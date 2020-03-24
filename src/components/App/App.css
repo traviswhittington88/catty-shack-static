@@ -1,0 +1,43 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  padding-top: 110px;
+  background: rgb(65, 169, 203);
+}
+
+.App {
+  /**font-family: 'Times New Roman', Times, serif;**/
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 20px;
+  text-align: center;
+  line-height: 1.5;
+  height: 100vh;
+  margin: 0 auto;
+  background: rgb(65, 169, 203);
+}
+
+button {
+  border: none;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button:hover,
+button:focus,
+button:active {
+  border-color: white;
+}
+
+.errorText {
+  padding: 10px;
+}
+
+@media screen and (min-width: 500px) {
+  body {
+    padding-top: 90px;
+  }
+}
