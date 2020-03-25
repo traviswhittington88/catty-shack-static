@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-// Type checking for props
-import PropTypes from 'prop-types';
 // Context
 import AppContext from '../../contexts/appContext';
 // MUI Stuff
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import nextId from 'react-id-generator';
+import randomUser from 'random-username-generator';
+import { now } from 'moment';
 
 class CommentForm extends Component {
   state = {
@@ -22,7 +23,17 @@ class CommentForm extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    this.context.postComment(this.props.meow_id, { body: this.state.body });
+
+    const comment = {
+      id: nextId(),
+      user_name: randomUser.generate(),
+      meow_id: this.props.meow_id,
+      body: this.state.body,
+      user_image: require('../../images/no-img.png'),
+      date_created: now()
+    };
+
+    this.context.postComment(this.props.meow_id, comment);
   };
 
   render() {

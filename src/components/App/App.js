@@ -3,8 +3,8 @@ import AppContext from '../../contexts/appContext';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import store from '../../store';
 import TokenService from '../../services/token-service';
-import PrivateRoute from '../Utils/PrivateRoute';
-import PublicOnlyRoute from '../Utils/PublicOnlyRoute';
+//import PrivateRoute from '../Utils/PrivateRoute';
+//import PublicOnlyRoute from '../Utils/PublicOnlyRoute';
 import Footer from '../Footer/Footer';
 import HomePage from '../../routes/HomePage/HomePage';
 import LoginPage from '../../routes/LoginPage/LoginPage';
@@ -22,7 +22,7 @@ export default class App extends Component {
     this.state = {
       user: store.user,
       meows: store.meows,
-      meow: [],
+      meow: null,
       profile: null,
       hasError: false,
       error: { message: null },
@@ -37,8 +37,7 @@ export default class App extends Component {
 
   // GET Methods
   getUserData = user_name => {
-    this.setState({ loading: true });
-    fetch(`${config.API_ENDPOINT}api/users/${user_name}`, {
+    /*fetch(`${config.API_ENDPOINT}api/users/${user_name}`, {
       method: 'GET',
       headers: {
         'content-type': 'application/json',
@@ -55,11 +54,10 @@ export default class App extends Component {
         let meows = userData.meows;
         let profile = userData.user;
         this.setState({ meows, profile });
-        this.setState({ loading: false });
       })
       .catch(error => {
         this.setState({ error });
-      });
+      }); */
   };
 
   getUser = () => {
@@ -136,6 +134,7 @@ export default class App extends Component {
     console.log('getMeow called');
     let tempMeows = this.state.meows;
     let meow = tempMeows.filter(meow => meow.meow_id === meow_id);
+    meow.comments = [];
     this.setState({ meow });
 
     /*fetch(`${config.API_ENDPOINT}api/meows/${meow_id}`, {
@@ -180,9 +179,6 @@ export default class App extends Component {
   };
 
   likeMeow = meow_id => {
-    const { meows } = this.state;
-    let tempMeows = meows;
-    console.log('likeMeow called', meow_id);
     // Add Like to likes array
     const newLike = {
       id: null,
@@ -198,7 +194,7 @@ export default class App extends Component {
 
     // add the like to the meow in the db
 
-    fetch(`${config.API_ENDPOINT}api/meows/${meow_id}/like`, {
+    /*fetch(`${config.API_ENDPOINT}api/meows/${meow_id}/like`, {
       method: 'GET',
       headers: {
         'content-type': 'application/json',
@@ -226,7 +222,7 @@ export default class App extends Component {
       })
       .catch(error => {
         this.setState({ error });
-      });
+      }); */
   };
 
   unlikeMeow = meow_id => {
@@ -243,7 +239,7 @@ export default class App extends Component {
     this.setState({ user: newUser });
 
     // remove the like from the likes table in the db
-    fetch(`${config.API_ENDPOINT}api/meows/${meow_id}/unlike`, {
+    /*fetch(`${config.API_ENDPOINT}api/meows/${meow_id}/unlike`, {
       method: 'GET',
       headers: {
         'content-type': 'application/json',
@@ -269,7 +265,7 @@ export default class App extends Component {
       })
       .catch(error => {
         this.setState({ error });
-      });
+      }); */
   };
 
   getMeows = () => {
@@ -351,16 +347,18 @@ export default class App extends Component {
 
   postComment = (meow_id, comment) => {
     // increment comment count of meow being commented
+    console.log('postcomment called', meow_id, comment);
     const index = this.state.meows.findIndex(meow => meow.meow_id === meow_id);
     let newMeows = this.state.meows;
     newMeows[index].commentCount++;
     this.setState({ meows: newMeows });
-    // increment count in meow dialog of meow being displayed
+    // increment count in meow dialog of meow being displayed and add comment to comments array in meow
     let newMeow = this.state.meow;
-    newMeow.commentcount++;
+    newMeow.commentCount++;
+    newMeow.comments.unshift(comment);
     this.setState({ meow: newMeow });
     // Post new comment to DB
-    fetch(`${config.API_ENDPOINT}api/meows/${meow_id}/comments`, {
+    /*fetch(`${config.API_ENDPOINT}api/meows/${meow_id}/comments`, {
       method: 'POST',
       body: JSON.stringify(comment),
       headers: {
@@ -381,7 +379,7 @@ export default class App extends Component {
       })
       .catch(error => {
         this.setState({ error });
-      });
+      }); */
   };
 
   uploadImage = formData => {
@@ -401,7 +399,7 @@ export default class App extends Component {
       .then(user => {
         // update user image of meows owned by the user to reflect new image
         let newMeows = this.state.meows;
-        newMeows.map(meow => {
+        newMeows.forEach(meow => {
           if (meow.userHandle === user.user_name) {
             meow.user_image = user.user_image;
           }
@@ -499,6 +497,7 @@ export default class App extends Component {
   }
 
   render() {
+    console.log('this is meow', this.state.meow);
     const contextValue = {
       loading: this.state.loading,
       meows: this.state.meows,
@@ -518,8 +517,7 @@ export default class App extends Component {
       setMeows: this.setMeows,
       setMeow: this.setMeow,
       user: this.state.user,
-      uploadImage: this.uploadImage,
-      getUserData: this.getUserData
+      uploadImage: this.uploadImage
     };
     return (
       <AppContext.Provider value={contextValue}>

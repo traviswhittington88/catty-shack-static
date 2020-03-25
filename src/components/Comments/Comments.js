@@ -7,11 +7,9 @@ import config from '../../config';
 import './Comments.css';
 
 export default class Comments extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     const { comments } = this.props;
+    console.log(comments);
     return (
       <Grid>
         {comments &&

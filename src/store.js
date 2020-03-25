@@ -41,7 +41,7 @@ const store = {
       commentCount: 0
     }
   ],
-  meow: {},
+  meow: [],
   profile: null,
   hasError: false,
   error: { message: null },

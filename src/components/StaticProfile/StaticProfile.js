@@ -2,27 +2,19 @@ import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import EditDetails from '../../components/EditDetails/EditDetails';
-import { MdLocationOn, MdToday, MdLink, MdEdit } from 'react-icons/md';
+import { MdLocationOn, MdToday, MdLink } from 'react-icons/md';
 import config from '../../config';
 
 export class StaticProfile extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const {
-      user: { id, user_name, user_image, bio, location, website, date_created }
+      user: { user_name, user_image, bio, location, website, date_created }
     } = this.props;
     const user = this.props;
     return (
       <Fragment>
         <div className='profile-card'>
-          <img
-            srcSet={`${config.API_ENDPOINT}${user_image}`}
-            alt='profile'
-            className='profile-image'
-          />
+          <img src={user_image} alt='profile' className='profile-image' />
           <h2>
             <Link to={`/users/${user_name}`}>@{user_name}</Link>
           </h2>

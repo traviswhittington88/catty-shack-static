@@ -4,33 +4,16 @@ import { MdAdd, MdClose } from 'react-icons/md';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
 import DialogContent from '@material-ui/core/DialogContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import './PostMeow.css';
 import AppContext from '../../contexts/appContext';
-
-const styles = theme => ({
-  ...theme,
-  submitButton: {
-    position: 'relative'
-  },
-  progressSpinner: {
-    position: 'absolute'
-  },
-  closeButton: {
-    position: 'absolute',
-    left: '90%',
-    top: '10%'
-  }
-});
+import nextId from 'react-id-generator';
+import randomUser from 'random-username-generator';
+import { now } from 'moment';
 
 export default class PostMeow extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   state = {
     open: false,
     body: '',
@@ -56,7 +39,15 @@ export default class PostMeow extends Component {
     if (this.state.body === '') {
       this.setState({ error: "You can't submit an empty meow, try again!" });
     } else {
-      this.context.postMeow({ body: this.state.body });
+      this.context.postMeow({
+        id: nextId(),
+        userHandle: randomUser.generate(),
+        body: this.state.body,
+        user_image: require('../../images/no-img.png'),
+        date_created: now(),
+        likeCount: 0,
+        commentCount: 0
+      });
       this.handleClose();
     }
   };

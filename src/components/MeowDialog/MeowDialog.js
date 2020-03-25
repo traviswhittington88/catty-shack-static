@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import MyButton from '../MyButton/MyButton';
 import Comments from '../Comments/Comments';
 import CommentForm from '../CommentForm/CommentForm';
-import config from '../../config';
 import './MeowDialog.css';
 // mui stuff
 import { MdChat, MdClose, MdUnfoldMore } from 'react-icons/md';
@@ -17,18 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import AppContext from '../../contexts/appContext';
 import LikeButton from '../LikeButton/LikeButton';
 
-const styles = theme => ({
-  ...theme,
-  separator: {
-    border: 'none',
-    margin: '4'
-  }
-});
-
 export default class MeowDialog extends Component {
-  constructor(props) {
-    super(props);
-  }
   state = {
     open: false,
     error: '',

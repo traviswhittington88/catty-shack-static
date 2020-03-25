@@ -5,11 +5,10 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import './Meow.css';
 import MyButton from '../MyButton/MyButton';
-import { MdChat, MdFavorite, MdFavoriteBorder } from 'react-icons/md';
+import { MdChat } from 'react-icons/md';
 import DeleteMeow from '../DeleteMeow/DeleteMeow';
 import MeowDialog from '../MeowDialog/MeowDialog';
 import LikeButton from '../LikeButton/LikeButton';
-import config from '../../config';
 
 class Meow extends Component {
   constructor(props) {
@@ -40,16 +39,12 @@ class Meow extends Component {
     return (
       <>
         <div className='card'>
-          <img
-            src={user_image}
-            alt='user profile image'
-            className='meow-image'
-          />
+          <img src={user_image} alt='user profile' className='meow-image' />
           <div className='meow-container'>
             <h4>
               <b>
                 {' '}
-                <Link to={`/users/${userHandle}`}>@{userHandle}</Link>
+                <Link to={`#`}>@{userHandle}</Link>
               </b>
             </h4>
             <p>{dayjs(date_created).fromNow()}</p>

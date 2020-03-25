@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import EditDetails from '../../components/EditDetails/EditDetails';
 import AppContext from '../../contexts/appContext';
 import dayjs from 'dayjs';
-import config from '../../config';
 //import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './Profile.css';
 //import { FaTwitter } from 'react-icons/fa';
@@ -68,9 +67,7 @@ export default class Profile extends Component {
                   </IconButton>
                 </div>
                 <h2>
-                  <Link to={`/users/${value.user.user_name}`}>
-                    @{value.user.user_name}
-                  </Link>
+                  <Link to={`#`}>@{value.user.user_name}</Link>
                 </h2>
                 <div className='profile-info'>
                   {value.user.bio && <p className='bio'>{value.user.bio}</p>}
